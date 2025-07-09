@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghana Forward - Issue Areas & Policy Hub</title>
+  <style>
+    :root {
+      --gold: #FFD700;
+      --white: #FFFFFF;
+      --green: #006B3F;
+      --red: #CE1126;
+      --black: #000000;
+      --light-gold: rgba(255, 215, 0, 0.1);
+      --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f9f9f9;
+      color: var(--black);
+      line-height: 1.6;
+    }
+    
+    header {
+      background-color: var(--white);
+      box-shadow: var(--shadow);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--black);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo span {
+      color: var(--gold);
+    }
+    
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 1.5rem;
+      position: relative;
+    }
+    
+    .nav-links a {
+      color: var(--black);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding-bottom: 5px;
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+    
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+    
+    .nav-links a.active {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    
+    .nav-links a.active:after {
+      width: 100%;
+      height: 3px;
+    }
+    
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('/api/placeholder/1200/400') center/cover no-repeat;
+      color: var(--white);
+      padding: 5rem 0;
+      text-align: center;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero h1:after {
+      content: '';
+      position: absolute;
+      width: 30%;
+      height: 3px;
+      background-color: var(--gold);
+      bottom: -10px;
+      left: 35%;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      margin-top: 1.5rem;
+    }
+    
+    .issue-cards {
+      padding: 4rem 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background-color: var(--gold);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .card {
+      background-color: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background-color: var(--gold);
+      transition: height 0.3s ease;
+    }
+    
+    .card:hover:before {
+      height: 100%;
+    }
+    
+    .card-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .card:hover .card-image img {
+      transform: scale(1.05);
+    }
+    
+    .card-content {
+      padding: 1.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--black);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .card-title:after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background-color: var(--gold);
+      bottom: 0;
+      left: 0;
+    }
+    
+    .card-description {
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .card-action {
+      background-color: var(--light-gold);
+      color: var(--black);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .card-action:hover {
+      background-color: var(--gold);
+      color: var(--black);
+    }
+    
+    .card-action i {
+      margin-right: 5px;
+    }
+    
+    footer {
+      background-color: #222;
+      color: var(--white);
+      padding: 3rem 0;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-section h3 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-section h3:after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background-color: var(--gold);
+      bottom: 0;
+      left: 0;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: var(--white);
+      background-color: #333;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background-color: var(--gold);
+      color: var(--black);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid #444;
+      color: #aaa;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      background-color: #e8c200;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--gold);
+      color: var(--black);
+    }
+    
+    /* Filter section */
+    .filter-container {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+      background-color: var(--gold);
+      color: var(--black);
+      border-color: var(--gold);
+    }
+    
+    /* Animation for cards */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animated {
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <img src="/api/placeholder/40/40" alt="GhFw Logo">
+          Ghana <span>Forward</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#" class="active">Policy & Issues Hub</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="Petitions.html">Petitions</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Get Involved</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Issue Areas & Policy Hub</h1>
+      <p>Explore our comprehensive policy areas where we focus our advocacy and development efforts. From economic growth to cultural preservation, discover how we're working to build a better Ghana.</p>
+    </div>
+  </section>
+
+  <section class="issue-cards">
+    <div class="container">
+      <div class="filter-container">
+        <button class="filter-btn active">All Categories</button>
+        <button class="filter-btn">Economic Development</button>
+        <button class="filter-btn">Governance</button>
+        <button class="filter-btn">Education</button>
+        <button class="filter-btn">Health</button>
+        <button class="filter-btn">Cultural Heritage</button>
+        <button class="filter-btn">Environment</button>
+        <button class="filter-btn">Infrastructure</button>
+        <button class="filter-btn">Youth Empowerment</button>
+      </div>
+      
+      <div class="cards-container">
+        <!-- Economic Development Card -->
+        <div class="card animated" style="animation-delay: 0.1s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Economic Development">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Economic Development & Opportunity</h3>
+            <p class="card-description">Promoting sustainable economic growth, job creation, and poverty reduction through innovative policies and initiatives.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Governance Card -->
+        <div class="card animated" style="animation-delay: 0.2s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Governance">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Governance & Transparency</h3>
+            <p class="card-description">Advocating for accountable governance, transparent institutions, and citizen participation in decision-making processes.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Education Card -->
+        <div class="card animated" style="animation-delay: 0.3s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Education">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Education & Innovation</h3>
+            <p class="card-description">Supporting quality education, digital literacy, and innovation to prepare Ghanaians for the challenges of the future.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Health Card -->
+        <div class="card animated" style="animation-delay: 0.4s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Health">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Health & Social Welfare</h3>
+            <p class="card-description">Working towards universal healthcare access, improved health infrastructure, and social protection for vulnerable populations.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cultural Heritage Card -->
+        <div class="card animated" style="animation-delay: 0.5s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Cultural Heritage">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Cultural Heritage & Tourism</h3>
+            <p class="card-description">Preserving Ghana's rich cultural heritage and promoting sustainable tourism as a driver for economic growth and cultural exchange.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Environmental Sustainability Card -->
+        <div class="card animated" style="animation-delay: 0.6s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Environmental Sustainability">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Environmental Sustainability</h3>
+            <p class="card-description">Advocating for environmental protection, climate action, sustainable resource management, and clean energy transition.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Infrastructure Card -->
+        <div class="card animated" style="animation-delay: 0.7s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Infrastructure">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Infrastructure & Urban Development</h3>
+            <p class="card-description">Supporting sustainable infrastructure development, urban planning, and digital connectivity to enhance quality of life.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Youth Empowerment Card -->
+        <div class="card animated" style="animation-delay: 0.8s;">
+          <div class="card-image">
+            <img src="/api/placeholder/400/200" alt="Youth Empowerment">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Youth Empowerment</h3>
+            <p class="card-description">Empowering young Ghanaians through skills development, leadership training, and increased participation in national development.</p>
+            <div class="card-actions">
+              <a href="#" class="card-action"><i class="fas fa-file-pdf"></i> Policy Brief</a>
+              <a href="#" class="card-action"><i class="fas fa-lightbulb"></i> Challenges</a>
+              <a href="#" class="card-action"><i class="fas fa-star"></i> Success Stories</a>
+              <a href="#" class="card-action"><i class="fas fa-tasks"></i> Action Items</a>
+              <a href="#" class="card-action"><i class="fas fa-pen-nib"></i> Petitions</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Ghana Forward</h3>
+          <p>Building Our Nation Together</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Issue Areas</a></li>
+            <li><a href="#">News & Analysis</a></li>
+            <li><a href="#">Petitions</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Get Involved</h3>
+          <ul class="footer-links">
+            <li><a href="#">Volunteer</a></li>
+            <li><a href="#">Donate</a></li>
+            <li><a href="#">Become an Ambassador</a></li>
+            <li><a href="#">Corporate Partnerships</a></li>
+            <li><a href="#">Internships</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Accra, Ghana</p>
+          <p><i class="fas fa-phone"></i> +233 XX XXX XXXX</p>
+          <p><i class="fas fa-envelope"></i> info@ghanaforward.org</p>
+          <p><i class="fab fa-whatsapp"></i> WhatsApp: +233 XX XXX XXXX</p>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2025 Ghana Forward. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple animation to stagger card appearance
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add animation class to cards
+      const cards = document.querySelectorAll('.card');
+      
+      // Highlight current page in navigation
+      const currentPage = "Issue Areas"; // This would be dynamically set in a real app
+      const navLinks = document.querySelectorAll('.nav-links a');
+      
+      navLinks.forEach(link => {
+        if (link.textContent === currentPage) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Filter functionality
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Remove active class from all buttons
+          filterBtns.forEach(b => b.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Add filter logic here (in a real application)
+          // For now, we'll just simulate a filter effect
+          const category = this.textContent.trim();
+          
+          if(category === 'All Categories') {
+            cards.forEach(card => {
+              card.style.display = 'block';
+              // Re-trigger animation
+              card.classList.remove('animated');
+              void card.offsetWidth; // Force reflow
+              card.classList.add('animated');
+            });
+          } else {
+            cards.forEach(card => {
+              const cardTitle = card.querySelector('.card-title').textContent;
+              if(cardTitle.includes(category) || category === 'All Categories') {
+                card.style.display = 'block';
+                // Re-trigger animation
+                card.classList.remove('animated');
+                void card.offsetWidth; // Force reflow
+                card.classList.add('animated');
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          }
+        });
+      });
+      
+      // Simulated hover effect for card actions
+      const cardActions = document.querySelectorAll('.card-action');
+      cardActions.forEach(action => {
+        action.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+        });
+        action.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

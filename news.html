@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Forward - News & Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --white: #FFFFFF;
+            --green: #006B3F;
+            --red: #CE1126;
+            --black: #000000;
+            --gray: #f5f5f5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo-text {
+            margin-left: 10px;
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--black);
+        }
+        
+        .logo-text span {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold);
+            animation: underlineAnimation 0.3s forwards;
+        }
+        
+        @keyframes underlineAnimation {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        /* Current page highlight effect */
+        nav ul li a.active {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .hero-section {
+            background-color: var(--green);
+            padding: 40px 0;
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-section h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .hero-section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* News & Analysis Content */
+        .news-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        /* Featured Article */
+        .featured-article {
+            position: relative;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .featured-article:hover {
+            transform: translateY(-5px);
+            border: 2px solid var(--gold);
+        }
+        
+        .featured-article img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .featured-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            color: var(--white);
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .featured-content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .article-meta .author {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 8px;
+            object-fit: cover;
+        }
+        
+        .reading-time {
+            display: flex;
+            align-items: center;
+        }
+        
+        .hourglass {
+            margin-right: 5px;
+            animation: flip 2s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes flip {
+            0% {
+                transform: rotate(0);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .article-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .article-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 15px;
+        }
+        
+        .card-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .card-content p {
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+        
+        .card-meta .date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-meta .date i {
+            margin-right: 5px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            color: var(--green);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .read-more:hover {
+            color: var(--gold);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--gray);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        /* Trending Topics */
+        .trending-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .trending-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .trending-item .trend-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-right: 10px;
+            min-width: 25px;
+        }
+        
+        .trending-item .trend-title {
+            font-size: 14px;
+            color: var(--black);
+            text-decoration: none;
+            transition: color 0.3s;
+            flex-grow: 1;
+        }
+        
+        .trending-item .trend-title:hover {
+            color: var(--green);
+        }
+        
+        .trending-item .pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--red);
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Topic Filters */
+        .topic-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-btn {
+            background-color: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+        }
+        
+        .filter-btn.active {
+            font-weight: bold;
+        }
+        
+        /* Subscribe Form */
+        .subscribe-form {
+            margin-top: 15px;
+        }
+        
+        .subscribe-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .subscribe-btn {
+            background-color: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .subscribe-btn:hover {
+            background-color: var(--gold);
+        }
+        
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--gold);
+            color: var(--white);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--black);
+            transition: all 0.3s;
+        }
+        
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+        }
+        
+        .pagination-btn.active {
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 40px 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wave-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: wave 3s infinite linear;
+        }
+        
+        @keyframes wave {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .footer-section p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--gold);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--gold);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+        
+        /* Share buttons */
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .share-btn:hover {
+            transform: scale(1.15);
+        }
+        
+        .share-btn.facebook:hover {
+            background-color: #3b5998;
+            color: white;
+        }
+        
+        .share-btn.twitter:hover {
+            background-color: #1da1f2;
+            color: white;
+        }
+        
+        .share-btn.whatsapp:hover {
+            background-color: #25d366;
+            color: white;
+        }
+        
+        .share-btn.linkedin:hover {
+            background-color: #0077b5;
+            color: white;
+        }
+        
+        .bookmark-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        
+        .bookmark-btn:hover {
+            color: var(--gold);
+        }
+        
+        .bookmark-btn i {
+            transition: transform 0.3s;
+        }
+        
+        .bookmark-btn:hover i {
+            transform: translateY(-3px);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 15px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .hero-section h1 {
+                font-size: 28px;
+            }
+            
+            .hero-section p {
+                font-size: 16px;
+            }
+            
+            .featured-article img {
+                height: 300px;
+            }
+            
+            .featured-content h2 {
+                font-size: 22px;
+            }
+            
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="/api/placeholder/50/50" alt="GF Logo">
+                <div class="logo-text">
+                    <h1>Ghana Forward</h1>
+                    <!-- <span>Building Our Nation Together</span> -->
+                </div>
+            </div>
+            <nav>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="issue.html">Issue Areas</a></li>
+                    <li><a href="news.html" class="active">News & Analysis</a></li>
+                    <li><a href="petitions.html">Petitions</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="get-involved.html">Get Involved</a></li>
+                    <li><a href="donate.html">Donate</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1>News & Analysis</h1>
+            <p>Stay informed with the latest developments and expert analysis on issues affecting Ghana's future.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="topic-filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Economy</button>
+            <button class="filter-btn">Governance</button>
+            <button class="filter-btn">Education</button>
+            <button class="filter-btn">Health</button>
+            <button class="filter-btn">Culture</button>
+            <button class="filter-btn">Environment</button>
+            <button class="filter-btn">Infrastructure</button>
+            <button class="filter-btn">Youth</button>
+        </div>
+
+        <div class="news-container">
+            <div class="main-content">
+                <article class="featured-article">
+                    <img src="/api/placeholder/800/400" alt="Featured Article">
+                    <div class="featured-content">
+                        <h2>Ghana's New Digital Economic Policy: What It Means For Growth</h2>
+                        <div class="article-meta">
+                            <div class="author">
+                                <img src="/api/placeholder/30/30" alt="Author">
+                                <span>Dr. Kofi Mensah</span>
+                            </div>
+                            <div class="reading-time">
+                                <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                <span>8 min read</span>
+                            </div>
+                        </div>
+                        <p>An in-depth analysis of Ghana's ambitious new digital economy framework and its potential impact on job creation, innovation, and inclusive growth.</p>
+                        <div class="share-buttons">
+                            <a href="#" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" class="share-btn linkedin"><i class="fab fa-linkedin-in"></i></a>
+                            <button class="bookmark-btn">
+                                <i class="far fa-bookmark"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="article-grid">
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Education Reform: The New Curriculum's First Year</h3>
+                            <p>Evaluating the successes and challenges of Ghana's education reform one year after implementation.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>May 2, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>5 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Healthcare Access: Bridging Urban-Rural Divides</h3>
+                            <p>How community health initiatives are addressing healthcare disparities across Ghana.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 28, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>6 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Youth Entrepreneurs Transforming Agriculture</h3>
+                            <p>Meet the young innovators using technology to revolutionize farming practices across Ghana.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 25, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>7 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Infrastructure Development: The Eastern Corridor Progress</h3>
+                            <p>A progress report on the Eastern Corridor road project and its economic impact on surrounding communities.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 20, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>4 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Environmental Policy: Ghana's Climate Action Plan</h3>
+                            <p>Analyzing Ghana's new climate commitments and the path to sustainable development.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 15, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>9 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="article-card">
+                        <img src="/api/placeholder/400/300" alt="Article Image">
+                        <div class="card-content">
+                            <h3>Cultural Heritage: Preserving Ghana's Traditional Crafts</h3>
+                            <p>How artisans are blending tradition with innovation to keep Ghana's cultural heritage alive.</p>
+                            <div class="card-meta">
+                                <div class="date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 10, 2025</span>
+                                </div>
+                                <div class="reading-time">
+                                    <span class="hourglass"><i class="fas fa-hourglass-half"></i></span>
+                                    <span>6 min</span>
+                                </div>
+                            </div>
+                            <a href="#" class="read-more">Read More →</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="pagination">
+                    <a href="#" class="pagination-btn active">1</a>
+                    <a href="#" class="pagination-btn">2</a>
+                    <a href="#" class="pagination-btn">3</a>
+                    <a href="#" class="pagination-btn"><i class="fas fa-ellipsis-h"></i></a>
+                    <a href="#" class="pagination-btn">10</a>
+                    <a href="#" class="pagination-btn"><i class="fas fa-angle-right"></i></a>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>What's Trending</h3>
+                    <div class="trending-item">
+                        <div class="trend-number">1</div>
+                        <a href="#" class="trend-title">Economic Zones: The Next Big Investment Opportunity</a>
+                        <div class="pulse"></div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trend-number">2</div>
+                        <a href="#" class="trend-title">Parliament Debates New Education Funding Bill</a>
+                        <div class="pulse"></div>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trend-number">3</div>
+                        <a href="#" class="trend-title">Healthcare Workers End Strike After New Agreement</a>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trend-number">4</div>
+                        <a href="#" class="trend-title">Youth Unemployment: New Solutions Needed</a>
+                    </div>
+                    <div class="trending-item">
+                        <div class="trend-number">5</div>
+                        <a href="#" class="trend-title">Tech Startups in Ghana: The Rising Ecosystem</a>
+                        <div class="pulse"></div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Subscribe to Updates</h3>
+                    <p>Get the latest news and analysis delivered to your inbox.</p>
+                    <form class="subscribe-form">
+                        <input type="text" placeholder="Your Name">
+                        <input type="email" placeholder="Your Email">
+                        <button type="submit" class="subscribe-btn">Subscribe</button>
+                    </form>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Popular Tags</h3>
+                    <div class="tags">
+                        <a href="#" class="tag">Economy</a>
+                        <a href="#" class="tag">Education</a>
+                        <a href="#" class="tag">Healthcare</a>
+                        <a href="#" class="tag">Technology</a>
+                        <a href="#" class="tag">Policy</a>
+                        <a href="#" class="tag">Development</a>
+                        <a href="#" class="tag">Youth</a>
+                        <a href="#" class="tag">Agriculture</a>
+                        <a href="#" class="tag">Infrastructure</a>
+                        <a href="#" class="tag">Democracy</a>
+                        <a href="#" class="tag">Environment</a>
+                        <a href="#" class="tag">Culture</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Featured Authors</h3>
+                    <div class="trending-item">
+                        <img src="/api/placeholder/40/40" alt="Author" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                        <a href="#" class="trend-title">Dr. Kofi Mensah<br><span style="font-size: 12px; color: #666;">Economic Policy</span></a>
+                    </div>
+                    <div class="trending-item">
+                        <img src="/api/placeholder/40/40" alt="Author" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                        <a href="#" class="trend-title">Ama Darko<br><span style="font-size: 12px; color: #666;">Education & Innovation</span></a>
+                    </div>
+                    <div class="trending-item">
+                        <img src="/api/placeholder/40/40" alt="Author" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                        <a href="#" class="trend-title">Dr. Emmanuel Owusu<br><span style="font-size: 12px; color: #666;">Healthcare Policy</span></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="wave-animation"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Ghana Forward</h3>
+                    <p>Ghana Forward is a non-partisan organization dedicated to promoting informed civic engagement and sustainable development in Ghana.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Issue Areas</a></li>
+                        <li><a href="#">News & Analysis</a></li>
+                        <li><a href="#">Petitions</a></li>
+                        <li><a href="#">Nation Builders Forum</a></li>
+                        <li><a href="#">Resource Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Get Involved</h3>
+                    <ul>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Become an Ambassador</a></li>
+                        <li><a href="#">Guest Contributors</a></li>
+                        <li><a href="#">Donate</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                        <li><a href="#">Internship Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Independence Avenue, Accra</li>
+                        <li><i class="fas fa-phone"></i> +233 20 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@ghanaforward.org</li>
+                    </ul>
+                    <p class="mt-3">Sign up for WhatsApp updates:</p>
+                    <div class="subscribe-form">
+                        <input type="tel" placeholder="Your Phone Number">
+                        <button type="submit" class="subscribe-btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ghana Forward. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+        
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                // Here you would normally filter the articles based on category
+            });
+        });
+        
+        // Bookmark animation
+        const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+        bookmarkButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+                
+                if (icon.classList.contains('fas')) {
+                    this.querySelector('span').textContent = 'Saved';
+                } else {
+                    this.querySelector('span').textContent = 'Save';
+                }
+            });
+        });
+        
+        // Share buttons animation
+        const shareButtons = document.querySelectorAll('.share-btn');
+        shareButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.add('animated');
+                setTimeout(() => {
+                    this.classList.remove('animated');
+                }, 300);
+                // Here you would normally handle the share functionality
+            });
+        });
+    </script>
+</body>
+</html>

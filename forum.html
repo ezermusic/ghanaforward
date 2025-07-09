@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Forward - Nation Builders Forum</title>
+    <style>
+        :root {
+            --gold: #FFD700;
+            --white: #FFFFFF;
+            --green: #006B3F;
+            --red: #CE1126;
+            --black: #000000;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        /* Navigation Styles */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Current page highlight */
+        nav ul li a.current {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        nav ul li a.current::after {
+            width: 100%;
+            background-color: var(--gold);
+            height: 3px;
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e6c000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--black);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content Styles */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--gold);
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        /* Forum Layout */
+        .forum-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Main Forum Section */
+        .main-forum {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .forum-tabs {
+            display: flex;
+            background-color: var(--light-gray);
+            padding: 0 1rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .tab {
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+            color: var(--dark-gray);
+        }
+
+        .tab.active {
+            color: var(--black);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        .search-bar {
+            display: flex;
+            padding: 1rem;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        .search-button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--gold);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            color: var(--black);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #e6c000;
+        }
+
+        /* Topic Cards */
+        .topic-list {
+            padding: 1rem;
+        }
+
+        .topic-card {
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--gold);
+        }
+
+        .topic-header {
+            display: flex;
+            padding: 1rem;
+            border-bottom: 1px solid var(--medium-gray);
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topic-title {
+            font-weight: 600;
+            color: var(--black);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .hot-topic {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255, 215, 0, 0.2);
+            color: var(--black);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.75rem;
+        }
+
+        .hot-topic .flame {
+            color: var(--red);
+            margin-right: 4px;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .topic-meta {
+            display: flex;
+            align-items: center;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .topic-meta span {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .topic-meta i {
+            margin-right: 0.25rem;
+        }
+
+        .topic-content {
+            padding: 1rem;
+            color: var(--dark-gray);
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+
+        .topic-card:hover .topic-content {
+            height: auto;
+            max-height: 80px;
+        }
+
+        .topic-footer {
+            display: flex;
+            padding: 0.75rem 1rem;
+            background-color: var(--light-gray);
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topic-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            margin-right: 0.5rem;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .topic-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            color: var(--gold);
+        }
+
+        .action-button i {
+            margin-right: 0.25rem;
+        }
+
+        .upvote-button:hover {
+            color: var(--green);
+        }
+
+        .upvote-button.active {
+            color: var(--green);
+        }
+
+        /* Featured Discussion */
+        .featured-discussion {
+            background-color: var(--white);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .featured-header {
+            background-color: rgba(255, 215, 0, 0.15);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .featured-label {
+            font-weight: 600;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+        }
+
+        .featured-label i {
+            color: var(--gold);
+            margin-right: 0.5rem;
+        }
+
+        /* Sidebar */
+        .forum-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-section {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border-bottom: 1px solid var(--medium-gray);
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .hot-topics-list {
+            list-style: none;
+        }
+
+        .hot-topic-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--medium-gray);
+            transition: all 0.3s ease;
+        }
+
+        .hot-topic-item:last-child {
+            border-bottom: none;
+        }
+
+        .hot-topic-item:hover {
+            transform: translateX(5px);
+        }
+
+        .hot-topic-item i {
+            color: var(--red);
+            margin-right: 0.75rem;
+            font-size: 0.9rem;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        .hot-topic-title {
+            font-weight: 500;
+            color: var(--dark-gray);
+            transition: color 0.3s ease;
+            flex: 1;
+        }
+
+        .hot-topic-item:hover .hot-topic-title {
+            color: var(--black);
+        }
+
+        .hot-topic-count {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+        }
+
+        .user-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stat-label {
+            display: flex;
+            align-items: center;
+            color: var(--dark-gray);
+        }
+
+        .stat-label i {
+            margin-right: 0.5rem;
+            color: var(--gold);
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .badge-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .badge i {
+            margin-right: 0.25rem;
+            color: var(--gold);
+        }
+
+        .create-topic-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--green);
+            color: var(--white);
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .create-topic-btn:hover {
+            background-color: #005733;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-topic-btn i {
+            margin-right: 0.5rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .page-item {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-item:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .page-item.active {
+            background-color: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 3rem 5%;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .wave-animation {
+            position: relative;
+            height: 70px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,24L80,40C160,56,320,88,480,88C640,88,800,56,960,40C1120,24,1280,24,1360,24L1440,24L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="%23333333"/></svg>');
+            background-size: 1200px 100px;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1200px; }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .forum-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .action-buttons {
+                margin-top: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topic-meta span:not(:first-child) {
+                display: none;
+            }
+            
+            .topic-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .topic-meta {
+                margin-top: 0.5rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .topic-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .topic-actions {
+                margin-top: 0.5rem;
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .animate-slideUp {
+            animation: slideUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/api/placeholder/50/50" alt="GF Logo">
+                <div class="logo-text">Ghana <span>Forward</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="Policy.html">Issue Areas</a></li>
+                    <li><a href="news.html">News & Analysis</a></li>
+                    <li><a href="petitions.html">Petitions</a></li>
+                    <li><a href="#" class="current">Nation Builders Forum</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="events.html">Events</a></li>
+                </ul>
+            </nav>
+            <div class="action-buttons">
+                <a href="#" class="btn btn-outline">Sign In</a>
+                <a href="#" class="btn btn-primary">Join Us</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h1 class="page-title animate-fadeIn">Nation Builders Forum</h1>
+        <p class="page-description animate-fadeIn">
+            Join the conversation with fellow citizens passionate about Ghana's future. Share ideas, 
+            discuss policies, and collaborate on solutions for national development.
+        </p>
+
+        <div class="forum-container animate-slideUp">
+            <!-- Main Forum Section -->
+            <div class="main-forum">
+                <div class="forum-tabs">
+                    <div class="tab active">All Discussions</div>
+                    <div class="tab">Popular</div>
+                    <div class="tab">Recent</div>
+                    <div class="tab">My Discussions</div>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search discussions...">
+                    <button class="search-button">Search</button>
+                </div>
+
+                <!-- Featured Discussion -->
+                <div class="featured-discussion">
+                    <div class="featured-header">
+                        <div class="featured-label">
+                            <i class="fas fa-star">★</i> Featured Discussion
+                        </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="forum-sidebar">
+                <!-- User Profile -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Your Profile</div>
+                    <div class="sidebar-content">
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <div class="stat-label"><i class="fas fa-comments">💬</i> Discussions</div>
+                                <div class="stat-value">12</div>
+                            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div class="wave-animation">
+        <div class="wave"></div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Ghana Forward</h3>
+                <p>Building our nation together through civic engagement, policy advocacy, and community action.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">F</a>
+                    <a href="#" class="social-icon">T</a>
+                    <a href="#" class="social-icon">I</a>
+                    <a href="#" class="social-icon">Y</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">News & Analysis</a></li>
+                    <li><a href="#">Petitions</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Issue Areas</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Economic Development</a></li>
+                    <li><a href="#">Governance & Transparency</a></li>
+                    <li><a href="#">Education & Innovation</a></li>
+                    <li><a href="#">Health & Social Welfare</a></li>
+                    <li><a href="#">Environmental Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Stay Connected</h3>
+                <p>Join our newsletter to receive updates on our activities and initiatives.</p>
+                <div style="margin-top: 1rem; display: flex;">
+                    <input type="email" placeholder="Your email address" style="flex: 1; padding: 0.5rem; border: 1px solid var(--medium-gray); border-radius: 4px 0 0 4px;">
+                    <button style="padding: 0.5rem 1rem; background-color: var(--gold); color: var(--black); border: none; border-radius: 0 4px 4px 0; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Ghana Forward. All rights reserved. Building Our Nation Together.
+        </div>
+    </footer>
+
+    <script>
+        // Simple toggles for demonstration
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.upvote-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const count = this.textContent.trim().split(' ')[1];
+                const newCount = this.classList.contains('active') ? 
+                    parseInt(count) + 1 : parseInt(count) - 1;
+                this.innerHTML = `<i class="fas fa-thumbs-up">👍</i> ${newCount}`;
+            });
+        });
+
+        // Add scroll animations
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.topic-card');
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                if(position.top < window.innerHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize cards with opacity 0
+        document.querySelectorAll('.topic-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+        });
+
+        // Add scroll event listener
+        window.addEventListener('scroll', animateOnScroll);
+        // Run once on load
+        setTimeout(animateOnScroll, 100);
+    </script>
+</body>
+</html>            <div class="stat-item">
+                                <div class="stat-label"><i class="fas fa-reply">↩️</i> Replies</div>
+                                <div class="stat-value">48</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label"><i class="fas fa-thumbs-up">👍</i> Upvotes Given</div>
+                                <div class="stat-value">97</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label"><i class="fas fa-award">🏆</i> Upvotes Received</div>
+                                <div class="stat-value">124</div>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-header" style="margin-top: 1rem;">Your Badges</div>
+                        <div class="badge-section">
+                            <div class="badge"><i class="fas fa-star">⭐</i> Contributor</div>
+                            <div class="badge"><i class="fas fa-fire">🔥</i> Active Voter</div>
+                            <div class="badge"><i class="fas fa-lightbulb">💡</i> Idea Generator</div>
+                        </div>
+                        
+                        <a href="#" class="create-topic-btn">
+                            <i class="fas fa-plus">➕</i> Create New Topic
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hot Topics -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header">What's Trending</div>
+                    <div class="sidebar-content">
+                        <ul class="hot-topics-list">
+                            <li class="hot-topic-item">
+                                <i class="fas fa-fire">🔥</i>
+                                <div class="hot-topic-title">Ghana's Tech Startup Ecosystem</div>
+                                <div class="hot-topic-count">92</div>
+                            </li>
+                            <li class="hot-topic-item">
+                                <i class="fas fa-fire">🔥</i>
+                                <div class="hot-topic-title">Renewable Energy Solutions</div>
+                                <div class="hot-topic-count">87</div>
+                            </li>
+                            <li class="hot-topic-item">
+                                <i class="fas fa-fire">🔥</i>
+                                <div class="hot-topic-title">Financial Inclusion Strategies</div>
+                                <div class="hot-topic-count">76</div>
+                            </li>
+                            <li class="hot-topic-item">
+                                <i class="fas fa-fire">🔥</i>
+                                <div class="hot-topic-title">Transportation Infrastructure</div>
+                                <div class="hot-topic-count">64</div>
+                            </li>
+                            <li class="hot-topic-item">
+                                <i class="fas fa-fire">🔥</i>
+                                <div class="hot-topic-title">Youth Entrepreneurship</div>
+                                <div class="hot-topic-count">58</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Events -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Upcoming Forum Events</div>
+                    <div class="sidebar-content">
+                        <div class="event-item" style="border-bottom: 1px solid var(--medium-gray); padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                            <div style="font-weight: 600; color: var(--black);">Policy Discussion Webinar</div>
+                            <div style="font-size: 0.9rem; color: var(--dark-gray);">May 15, 2025 • 6:00 PM</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                                <a href="#" style="color: var(--green); text-decoration: none;">Register Now</a>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div style="font-weight: 600; color: var(--black);">Community Town Hall</div>
+                            <div style="font-size: 0.9rem; color: var(--dark-gray);">May 22, 2025 • 4:00 PM</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                                <a href="#" style="color: var(--green); text-decoration: none;">Register Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    
+                    <!-- Topic 4 -->
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Sustainable Energy: Ghana's Path to Renewable Power Independence
+                            </div>
+                            <div class="topic-meta">
+                                <span><i class="fas fa-comment">💬</i> 54</span>
+                                <span><i class="fas fa-eye">👁️</i> 712</span>
+                                <span><i class="fas fa-clock">🕒</i> 2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            Discussing practical strategies for harnessing Ghana's abundant solar, wind, and hydro 
+                            resources to achieve energy independence while creating green jobs...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Yaw Mensah</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button">
+                                    <i class="fas fa-thumbs-up">👍</i> 48
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Topic 5 -->
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Cultural Heritage: Preserving Traditional Wisdom in Modern Ghana
+                            </div>
+                            <div class="topic-meta">
+                                <span><i class="fas fa-comment">💬</i> 42</span>
+                                <span><i class="fas fa-eye">👁️</i> 615</span>
+                                <span><i class="fas fa-clock">🕒</i> 4 days ago</span>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            How can we balance modernization with the preservation of Ghana's rich cultural heritage? 
+                            Let's explore ways to document and integrate traditional knowledge...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Efua Sutherland</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button">
+                                    <i class="fas fa-thumbs-up">👍</i> 37
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <div class="page-item"><i class="fas fa-chevron-left">←</i></div>
+                    <div class="page-item active">1</div>
+                    <div class="page-item">2</div>
+                    <div class="page-item">3</div>
+                    <div class="page-item">4</div>
+                    <div class="page-item">5</div>
+                    <div class="page-item"><i class="fas fa-chevron-right">→</i></div>
+                </div>
+                
+                        <div class="topic-meta">
+                            <span><i class="fas fa-comment">💬</i> 124</span>
+                            <span><i class="fas fa-eye">👁️</i> 1,856</span>
+                            <span><i class="fas fa-clock">🕒</i> 2 days ago</span>
+                        </div>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Revitalizing Ghana's Agricultural Sector: Strategies for Youth Inclusion
+                                <div class="hot-topic">
+                                    <span class="flame">🔥</span> Hot Topic
+                                </div>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            With over 60% of Ghana's population under 30, agriculture offers a promising 
+                            opportunity to address youth unemployment while boosting food security...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Kofi Annan</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button active">
+                                    <i class="fas fa-thumbs-up">👍</i> 85
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic List -->
+                <div class="topic-list">
+                    <!-- Topic 1 -->
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Digital Transformation: Building Ghana's Tech Hub in West Africa
+                            </div>
+                            <div class="topic-meta">
+                                <span><i class="fas fa-comment">💬</i> 47</span>
+                                <span><i class="fas fa-eye">👁️</i> 632</span>
+                                <span><i class="fas fa-clock">🕒</i> 5 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            Exploring the potential for Ghana to become a leading technology hub in West Africa 
+                            through strategic investments in digital infrastructure, education, and policy reforms...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Abena Mensah</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button">
+                                    <i class="fas fa-thumbs-up">👍</i> 32
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 -->
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Education Reform: Curriculum for the 21st Century Ghana
+                                <div class="hot-topic">
+                                    <span class="flame">🔥</span> Hot Topic
+                                </div>
+                            </div>
+                            <div class="topic-meta">
+                                <span><i class="fas fa-comment">💬</i> 89</span>
+                                <span><i class="fas fa-eye">👁️</i> 1,245</span>
+                                <span><i class="fas fa-clock">🕒</i> 1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            How can Ghana's education system better prepare students for the challenges and 
+                            opportunities of the global economy? Let's discuss practical curriculum changes...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Dr. Kwame Nkrumah</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button">
+                                    <i class="fas fa-thumbs-up">👍</i> 67
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 -->
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div class="topic-title">
+                                Healthcare Access: Community-Based Solutions for Rural Ghana
+                            </div>
+                            <div class="topic-meta">
+                                <span><i class="fas fa-comment">💬</i> 36</span>
+                                <span><i class="fas fa-eye">👁️</i> 520</span>
+                                <span><i class="fas fa-clock">🕒</i> 3 days ago</span>
+                            </div>
+                        </div>
+                        <div class="topic-content">
+                            Innovative approaches to expanding healthcare access in rural communities through 
+                            mobile clinics, telemedicine, and community health worker training programs...
+                        </div>
+                        <div class="topic-footer">
+                            <div class="topic-author">
+                                <div class="author-avatar">
+                                    <img src="/api/placeholder/30/30" alt="User Avatar">
+                                </div>
+                                <div class="author-name">Ama Ata Aidoo</div>
+                            </div>
+                            <div class="topic-actions">
+                                <button class="action-button upvote-button">
+                                    <i class="fas fa-thumbs-up">👍</i> 29
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-share">📤</i> Share
+                                </button>
+                                <button class="action-button">
+                                    <i class="fas fa-bookmark">🔖</i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>

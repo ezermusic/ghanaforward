@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Forward - Petitions & Public Letters</title>
+    <style>
+        :root {
+            --primary: #FFD700;
+            --secondary: #FFFFFF;
+            --accent: #006B3F;
+            --complementary: #CE1126;
+            --black: #000000;
+            --gray: #f5f5f5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        /* Header and Navigation */
+        header {
+            background-color: var(--secondary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--black);
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            font-style: italic;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Current page highlight effect */
+        nav ul li a.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        nav ul li a.active::after {
+            width: 100%;
+            background-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/400') center/cover no-repeat;
+            color: var(--secondary);
+            padding: 5rem 1rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            bottom: -10px;
+            left: 20%;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .hero p {
+            max-width: 800px;
+            margin: 1rem auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+        
+        /* Featured Petition */
+        .featured-petition {
+            background-color: var(--gray);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .featured-petition:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .featured-tag {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background-color: var(--primary);
+            color: var(--black);
+            padding: 0.5rem 2rem;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .featured-petition h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .petition-details {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .petition-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .petition-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s;
+        }
+        
+        .petition-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .petition-content {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .petition-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 6px;
+            position: relative;
+            width: 75%;
+            animation: progressFill 2s ease-out;
+        }
+        
+        @keyframes progressFill {
+            from { width: 0; }
+            to { width: 75%; }
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: progressShine 2s infinite;
+        }
+        
+        @keyframes progressShine {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
+        }
+        
+        .target {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .sign-btn {
+            display: inline-block;
+            background-color: var(--complementary);
+            color: var(--secondary);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .sign-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(206, 17, 38, 0.4);
+        }
+        
+        .sign-btn::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+        
+        .sign-btn:active::after {
+            transform: translate(-50%, -50%) scale(10);
+            opacity: 0;
+            transition: 0s;
+        }
+        
+        /* Active Petitions Grid */
+        .petitions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .petition-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .petition-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .petition-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .petition-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .petition-card:hover .petition-card-image img {
+            transform: scale(1.1);
+        }
+        
+        .petition-card-content {
+            padding: 1.5rem;
+        }
+        
+        .petition-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .petition-card .progress-bar {
+            height: 8px;
+        }
+        
+        .petition-card .progress {
+            width: var(--progress-value);
+        }
+        
+        .petition-card .signatures {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            color: var(--dark-gray);
+        }
+        
+        .petition-card .deadline {
+            font-size: 0.85rem;
+            color: var(--complementary);
+            margin-bottom: 1rem;
+        }
+        
+        .petition-card .sign-btn {
+            width: 100%;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Success Stories */
+        .success-stories {
+            padding: 3rem 0;
+            background-color: var(--gray);
+            margin: 3rem 0;
+        }
+        
+        .success-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .success-slider {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 400px;
+        }
+        
+        .success-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+        }
+        
+        .success-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .before-after {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .before-image, .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .before-image {
+            z-index: 2;
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--primary);
+            transform: translateX(-50%);
+            z-index: 3;
+            cursor: ew-resize;
+        }
+        
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 3px solid var(--secondary);
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .slider-button::before, .slider-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 10px;
+            height: 2px;
+            background-color: var(--black);
+        }
+        
+        .slider-button::before {
+            left: 7px;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+        
+        .slider-button::after {
+            right: 7px;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        
+        .success-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .success-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .success-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .success-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .success-meta .date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 5;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        /* Government Response Tracker */
+        .response-tracker {
+            margin: 3rem 0;
+        }
+        
+        .tracker-item {
+            display: flex;
+            margin-bottom: 2rem;
+            gap: 2rem;
+            padding: 1.5rem;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .tracker-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tracker-icon {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background-color: var(--accent);
+            color: var(--secondary);
+        }
+        
+        .tracker-content {
+            flex-grow: 1;
+        }
+        
+        .tracker-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .tracker-meta {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .response-status {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        .status-pending {
+            background-color: #FFF3CD;
+            color: #856404;
+        }
+        
+        .status-reviewing {
+            background-color: #D1ECF1;
+            color: #0C5460;
+        }
+        
+        .status-responded {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+        
+        /* Template Download Section */
+        .template-section {
+            background-color: var(--gray);
+            padding: 3rem 0;
+            margin: 3rem 0;
+        }
+        
+        .template-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .template-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .template-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent);
+            color: var(--secondary);
+            font-size: 2.5rem;
+        }
+        
+        .template-content {
+            padding: 1.5rem;
+        }
+        
+        .template-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .template-content p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-gray);
+        }
+        
+        .download-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--primary);
+            color: var(--black);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #E6C000;
+            transform: translateY(-2px);
+        }
+        
+        .download-counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            margin-top: 0.5rem;
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/api/placeholder/1200/400') center/cover no-repeat;
+            color: var(--secondary);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            margin-bottom: 2rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--primary);
+            color: var(--black);
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #E6C000;
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--secondary);
+            padding: 3rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .footer-logo-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .footer-logo-text span {
+            color: var(--primary);
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            color: var(--black);
+            transform: translateY(-5px);
+        }
+        
+        .bottom-footer {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .wave-footer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        
+        .wave-footer svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
+        
+        .wave-footer .shape-fill {
+            fill: var(--secondary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .petition-details {
+                flex-direction: column;
+            }
+            
+            .success-slide {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .success-slider {
+                height: 600px;
+            }
+            
+            .before-after {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .tracker-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .response-status {
+                margin: 1rem 0;
+            }
+        }
+        
+        /* Animation for Sign Now button */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(206, 17, 38, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(206, 17, 38, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(206, 17, 38, 0);
+            }
+        }
+        
+        .sign-btn.pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Gold dust particle animation */
+        .gold-dust {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <img src="/api/placeholder/50/50" alt="GF Logo">
+                <div>
+                    <div class="logo-text">Ghana <span>Forward</span></div>
+                    <div class="tagline">Building Our Nation Together</div>
+                </div>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#">Issue Areas</a></li>
+                    <li><a href="news.html">News & Analysis</a></li>
+                    <li><a href="#" class="active">Petitions & Public Letters</a></li>
+                    <li><a href="#">Nation Builders Forum</a></li>
+                    <li><a href="#">Get Involved</a></li>
+                </ul>
+                
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Petitions & Public Letters</h1>
+        <p>Join your voice with thousands of fellow citizens to advocate for meaningful change in Ghana. Together, we can drive policy reforms, improve governance, and build a better future for all Ghanaians.</p>
+    </section>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Featured Petition -->
+        <section class="featured-petition">
+            <div class="featured-tag">Featured</div>
+            <h3>Support the Education Reform Bill for Quality Education in Rural Communities</h3>
+            
+            <div class="petition-details">
+                <div class="petition-image">
+                    <img src="/api/placeholder/600/400" alt="Rural School Children">
+                </div>
+                
+                <div class="petition-content">
+                    <p>We call on the Ministry of Education to implement comprehensive reforms to improve educational infrastructure, teaching quality, and learning materials in rural communities across Ghana. Every child deserves a quality education regardless of geographic location.</p>
+                    
+                    <div class="petition-stats">
+                        <div class="stat">
+                            <span class="stat-number">15,487</span>
+                            <span class="stat-label">Signatures</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">25,000</span>
+                            <span class="stat-label">Target</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">18</span>
+                            <span class="stat-label">Days Left</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="target">
+                            <span>Current: 15,487 signatures</span>
+                            <span>Target: 25,000 signatures</span>
+                        </div>
+                    </div>
+                    
+                    <button class="sign-btn pulse">Sign Now</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Active Petitions -->
+        <section>
+            <h2 class="section-title">Active Petitions</h2>
+            
+            <div class="petitions-grid">
+                <!-- Petition 1 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Clean Water Initiative">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Clean Water Access Initiative for Northern Regions</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 65%"></div>
+                        </div>
+                        <p class="signatures"><strong>6,534</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: June 15, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+                
+                <!-- Petition 2 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Healthcare Access">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Expand Healthcare Access in Underserved Communities</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 82%"></div>
+                        </div>
+                        <p class="signatures"><strong>8,245</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: May 30, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+                
+                <!-- Petition 3 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Youth Employment">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Youth Employment and Skills Development Program</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 45%"></div>
+                        </div>
+                        <p class="signatures"><strong>4,512</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: July 5, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+                
+                <!-- Petition 4 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Environmental Protection">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Stop Illegal Mining and Protect Our Water Bodies</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 92%"></div>
+                        </div>
+                        <p class="signatures"><strong>9,234</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: May 20, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+                
+                <!-- Petition 5 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Road Safety">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Improve Road Safety Standards and Enforcement</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 38%"></div>
+                        </div>
+                        <p class="signatures"><strong>3,843</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: July 15, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+                
+                <!-- Petition 6 -->
+                <div class="petition-card">
+                    <div class="petition-card-image">
+                        <img src="/api/placeholder/400/300" alt="Digital Inclusion">
+                    </div>
+                    <div class="petition-card-content">
+                        <h3>Digital Inclusion and Internet Access for All Communities</h3>
+                        <div class="progress-bar">
+                            <div class="progress" style="--progress-value: 55%"></div>
+                        </div>
+                        <p class="signatures"><strong>5,523</strong> of 10,000 signatures</p>
+                        <p class="deadline">Deadline: June 25, 2025</p>
+                        <button class="sign-btn">Sign Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Success Stories Section -->
+        <section class="success-stories">
+            <div class="success-container">
+                <h2 class="section-title">Success Stories</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">See how our collective voices have created real change across Ghana</p>
+                
+                <div class="success-slider">
+                    <!-- Success Story 1 -->
+                    <div class="success-slide active">
+                        <div class="before-after">
+                            <img class="before-image" src="/api/placeholder/600/400" alt="Before: Potholed Road">
+                            <img class="after-image" src="/api/placeholder/600/400" alt="After: Newly Paved Road">
+                            <div class="slider-handle">
+                                <div class="slider-button"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="success-content">
+                            <h3>Kumasi Road Renovation Project</h3>
+                            <p>After collecting over 20,000 signatures, our petition led to the Ministry of Roads and Highways approving a comprehensive renovation of the Kumasi-Accra Highway, reducing accidents by 45% and cutting travel time by a third.</p>
+                            <p>The government also implemented new road maintenance standards that will prevent similar deterioration in the future.</p>
+                            <div class="success-meta">
+                                <span class="date">Completed: February 2025</span>
+                                <span>23,456 signatories</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Story 2 -->
+                    <div class="success-slide">
+                        <div class="before-after">
+                            <img class="before-image" src="/api/placeholder/600/400" alt="Before: Polluted Water">
+                            <img class="after-image" src="/api/placeholder/600/400" alt="After: Clean Water Access">
+                            <div class="slider-handle">
+                                <div class="slider-button"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="success-content">
+                            <h3>Clean Water for Volta Region</h3>
+                            <p>Our petition with 15,000 signatures successfully lobbied for a new water treatment facility in the Volta Region, providing clean drinking water to over 50,000 residents who previously relied on contaminated sources.</p>
+                            <p>The initiative also included education programs on water conservation and hygiene practices.</p>
+                            <div class="success-meta">
+                                <span class="date">Completed: January 2025</span>
+                                <span>15,789 signatories</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Story 3 -->
+                    <div class="success-slide">
+                        <div class="before-after">
+                            <img class="before-image" src="/api/placeholder/600/400" alt="Before: Outdated School">
+                            <img class="after-image" src="/api/placeholder/600/400" alt="After: Modern School Facilities">
+                            <div class="slider-handle">
+                                <div class="slider-button"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="success-content">
+                            <h3>Digital Classrooms Initiative</h3>
+                            <p>With 18,000 signatures, our petition secured funding for digital classrooms in 50 rural schools across Ghana, bringing modern educational technology to over 15,000 students who previously had no access to computers.</p>
+                            <p>The project included teacher training programs and ongoing technical support to ensure sustainability.</p>
+                            <div class="success-meta">
+                                <span class="date">Completed: December 2024</span>
+                                <span>18,234 signatories</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-nav">
+                        <span class="slider-dot active" data-slide="0"></span>
+                        <span class="slider-dot" data-slide="1"></span>
+                        <span class="slider-dot" data-slide="2"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Government Response Tracker -->
+        <section class="response-tracker">
+            <h2 class="section-title">Government Response Tracker</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Monitor how government bodies are responding to our collective petitions</p>
+            
+            <div class="tracker-item">
+                <div class="tracker-icon">📝</div>
+                <div class="tracker-content">
+                    <h3>Education Reform Bill for Rural Communities</h3>
+                    <p>The Ministry of Education has acknowledged receipt of our petition and has scheduled a committee review for further consideration of the proposed reforms.</p>
+                    <div class="tracker-meta">
+                        <span>Submitted: April 12, 2025</span>
+                        <span>15,487 signatures</span>
+                    </div>
+                    <span class="response-status status-reviewing">Under Review</span>
+                </div>
+            </div>
+            
+            <div class="tracker-item">
+                <div class="tracker-icon">📝</div>
+                <div class="tracker-content">
+                    <h3>Environmental Protection Act Amendment</h3>
+                    <p>The Ministry of Environment has formally responded to our petition with a detailed plan to strengthen regulations against illegal mining and improve enforcement mechanisms.</p>
+                    <div class="tracker-meta">
+                        <span>Submitted: March 5, 2025</span>
+                        <span>22,345 signatures</span>
+                    </div>
+                    <span class="response-status status-responded">Official Response Received</span>
+                </div>
+            </div>
+            
+            <div class="tracker-item">
+                <div class="tracker-icon">📝</div>
+                <div class="tracker-content">
+                    <h3>Healthcare Access Expansion Initiative</h3>
+                    <p>The petition has been received by the Ministry of Health. We are awaiting an official acknowledgment or response to our proposed healthcare expansion plan.</p>
+                    <div class="tracker-meta">
+                        <span>Submitted: April 28, 2025</span>
+                        <span>8,245 signatures</span>
+                    </div>
+                    <span class="response-status status-pending">Pending Response</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Template Download Section -->
+        <section class="template-section">
+            <div class="template-container">
+                <h2 class="section-title">Petition Templates</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">Download our professionally formatted templates to help craft effective petitions and public letters</p>
+                
+                <div class="template-grid">
+                    <!-- Template 1 -->
+                    <div class="template-card">
+                        <div class="template-icon">📄</div>
+                        <div class="template-content">
+                            <h3>General Petition Template</h3>
+                            <p>A comprehensive template for creating effective petitions on any issue affecting your community.</p>
+                            <a href="#" class="download-btn">Download (DOCX)</a>
+                            <div class="download-counter">Downloaded 2,345 times</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Template 2 -->
+                    <div class="template-card">
+                        <div class="template-icon">📄</div>
+                        <div class="template-content">
+                            <h3>Local Government Petition</h3>
+                            <p>Specifically designed for addressing issues requiring local government intervention.</p>
+                            <a href="#" class="download-btn">Download (DOCX)</a>
+                            <div class="download-counter">Downloaded 1,876 times</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Template 3 -->
+                    <div class="template-card">
+                        <div class="template-icon">📄</div>
+                        <div class="template-content">
+                            <h3>Open Letter to Parliament</h3>
+                            <p>Template for crafting effective open letters to members of Parliament on legislative issues.</p>
+                            <a href="#" class="download-btn">Download (DOCX)</a>
+                            <div class="download-counter">Downloaded 1,459 times</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Template 4 -->
+                    <div class="template-card">
+                        <div class="template-icon">📄</div>
+                        <div class="template-content">
+                            <h3>Ministerial Appeal Template</h3>
+                            <p>Structured format for directing appeals to specific ministries in the Ghanaian government.</p>
+                            <a href="#" class="download-btn">Download (DOCX)</a>
+                            <div class="download-counter">Downloaded 1,203 times</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="newsletter-container">
+                <h2>Stay Updated on Petition Progress</h2>
+                <p>Subscribe to our newsletter to receive updates on petition statuses, government responses, and new campaigns that need your support.</p>
+                
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="wave-footer">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="/api/placeholder/40/40" alt="Ghana Forward Logo">
+                    <div class="footer-logo-text">Ghana <span>Forward</span></div>
+                </div>
+                <p>A citizen-led initiative working towards a more prosperous, transparent, and equitable Ghana through policy advocacy, civic education, and community engagement.</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">FB</a>
+                    <a href="#" class="social-link">TW</a>
+                    <a href="#" class="social-link">IG</a>
+                    <a href="#" class="social-link">YT</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Issue Areas</a></li>
+                    <li><a href="#">News & Analysis</a></li>
+                    <li><a href="#">Petitions & Public Letters</a></li>
+                    <li><a href="#">Nation Builders Forum</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Policy Briefs</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">Templates & Guides</a></li>
+                    <li><a href="#">Event Archives</a></li>
+                    <li><a href="#">Webinar Recordings</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li>📍 123 Independence Avenue, Accra</li>
+                    <li>📞 +233 30 000 0000</li>
+                    <li>✉️ info@ghanaforward.org</li>
+                    <li>⏰ Mon-Fri: 9:00 AM - 5:00 PM</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bottom-footer">
+            <p>&copy; 2025 Ghana Forward. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Script for Gold Dust Particle Effects on CTA buttons
+        document.querySelectorAll('.sign-btn').forEach(button => {
+            button.addEventListener('mouseenter', function(e) {
+                createParticles(e.target);
+            });
+        });
+        
+        function createParticles(button) {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('span');
+                particle.classList.add('gold-dust');
+                
+                const size = Math.random() * 5 + 2;
+                const x = Math.random() * button.offsetWidth;
+                const y = Math.random() * button.offsetHeight;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                button.appendChild(particle);
+                
+                // Animation
+                const animation = particle.animate([
+                    { transform: `translate(0, 0)`, opacity: 1 },
+                    { transform: `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0,.9,.57,1)'
+                });
+                
+                animation.onfinish = () => {
+                    particle.remove();
+                };
+            }
+        }
+        
+        // Before-After Slider Functionality
+        const sliderHandles = document.querySelectorAll('.slider-handle');
+        
+        sliderHandles.forEach(handle => {
+            const beforeAfter = handle.closest('.before-after');
+            const beforeImage = beforeAfter.querySelector('.before-image');
+            
+            handle.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                document.addEventListener('mousemove', moveSlider);
+                document.addEventListener('mouseup', stopSlider);
+            });
+            
+            handle.addEventListener('touchstart', function(e) {
+                document.addEventListener('touchmove', moveSliderTouch);
+                document.addEventListener('touchend', stopSliderTouch);
+            });
+            
+            function moveSlider(e) {
+                const containerRect = beforeAfter.getBoundingClientRect();
+                const position = (e.clientX - containerRect.left) / containerRect.width * 100;
+                updateSliderPosition(position);
+            }
+            
+            function moveSliderTouch(e) {
+                const containerRect = beforeAfter.getBoundingClientRect();
+                const position = (e.touches[0].clientX - containerRect.left) / containerRect.width * 100;
+                updateSliderPosition(position);
+            }
+            
+            function updateSliderPosition(position) {
+                const clampedPosition = Math.max(0, Math.min(100, position));
+                handle.style.left = `${clampedPosition}%`;
+                beforeImage.style.clipPath = `polygon(0 0, ${clampedPosition}% 0, ${clampedPosition}% 100%, 0 100%)`;
+            }
+            
+            function stopSlider() {
+                document.removeEventListener('mousemove', moveSlider);
+                document.removeEventListener('mouseup', stopSlider);
+            }
+            
+            function stopSliderTouch() {
+                document.removeEventListener('touchmove', moveSliderTouch);
+                document.removeEventListener('touchend', stopSliderTouch);
+            }
+        });
+        
+        // Success Stories Slider
+        const slides = document.querySelectorAll('.success-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideIndex = parseInt(this.getAttribute('data-slide'));
+                showSlide(slideIndex);
+            });
+        });
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+        
+        // Auto-slide functionality
+        let slideIndex = 0;
+        
+        function autoSlide() {
+            slideIndex++;
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+            showSlide(slideIndex);
+        }
+        
+        // Change slide every 5 seconds
+        setInterval(autoSlide, 5000);
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>

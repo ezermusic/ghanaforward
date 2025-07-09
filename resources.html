@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Forward - Resource Center</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --white: #FFFFFF;
+            --green: #006B3F;
+            --red: #CE1126;
+            --black: #000000;
+            --light-gold: #FFF0AC;
+            --dark-gold: #D4AF37;
+            --light-gray: #F5F5F5;
+            --medium-gray: #E0E0E0;
+            --dark-gray: #333333;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--black);
+        }
+
+        .logo-tagline {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--dark-gold);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Current Page Highlight */
+        nav ul li a.current {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        nav ul li a.current::after {
+            width: 100%;
+            background-color: var(--green);
+            height: 3px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Resource Filter Section */
+        .filter-section {
+            background-color: var(--light-gray);
+            padding: 30px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--light-gold);
+            border-color: var(--gold);
+        }
+
+        .filter-btn.active {
+            background-color: var(--gold);
+            color: var(--black);
+            border-color: var(--dark-gold);
+            font-weight: 500;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+
+        .search-container button:hover {
+            color: var(--gold);
+        }
+
+        /* Access Tier Toggle */
+        .access-toggle {
+            width: 100%;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .toggle-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .toggle-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .toggle-tab:hover {
+            background-color: var(--light-gold);
+        }
+
+        .toggle-tab.active {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        .toggle-tab::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--green);
+            transition: width 0.3s;
+        }
+
+        .toggle-tab.active::after {
+            width: 80%;
+        }
+
+        .toggle-content {
+            padding: 20px;
+        }
+
+        .toggle-description {
+            margin-bottom: 15px;
+        }
+
+        .access-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feature-tag {
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-tag i {
+            margin-right: 5px;
+            color: var(--green);
+        }
+
+        .premium-tag {
+            background-color: var(--light-gold);
+        }
+
+        .premium-tag i {
+            color: var(--dark-gold);
+        }
+
+        .toggle-cta {
+            text-align: right;
+        }
+
+        .toggle-cta a {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .toggle-cta a:hover {
+            background-color: #004d2d;
+            transform: translateY(-2px);
+        }
+
+        .premium-cta a {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        .premium-cta a:hover {
+            background-color: var(--dark-gold);
+        }
+
+        /* Resource Cards Section */
+        .resources-section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .resource-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            perspective: 1000px;
+            height: 350px;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .resource-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .resource-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .resource-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .resource-card:hover .resource-image img {
+            transform: scale(1.05);
+        }
+
+        .resource-content {
+            padding: 20px;
+        }
+
+        .resource-type {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: var(--light-gold);
+            color: var(--black);
+            font-size: 12px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .resource-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        .downloads {
+            display: flex;
+            align-items: center;
+        }
+
+        .downloads i {
+            margin-right: 5px;
+            color: var(--green);
+        }
+
+        .resource-desc {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background-color: var(--light-gray);
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .resource-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            padding: 8px 15px;
+            background-color: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .download-btn i {
+            margin-right: 5px;
+        }
+
+        .download-btn:hover {
+            background-color: #004d2d;
+            transform: translateY(-2px);
+        }
+
+        .premium-resource .download-btn {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        .premium-resource .download-btn:hover {
+            background-color: var(--dark-gold);
+        }
+
+        .resource-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: var(--gold);
+            color: var(--black);
+            border-radius: 5px;
+            font-weight: 500;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .action-btn:hover {
+            color: var(--gold);
+        }
+
+        /* Featured Resource */
+        .featured-resource {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid var(--gold);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: -40px;
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 5px 40px;
+            transform: rotate(-45deg);
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        .featured-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .featured-content {
+                flex-direction: row;
+            }
+        }
+
+        .featured-image {
+            flex: 0 0 40%;
+            max-height: 300px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-details {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .featured-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .featured-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 0;
+        }
+
+        .featured-desc {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .featured-download {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .featured-btn {
+            padding: 10px 25px;
+            background-color: var(--green);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .featured-btn i {
+            margin-right: 10px;
+        }
+
+        .featured-btn:hover {
+            background-color: #004d2d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 107, 63, 0.3);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            background-color: var(--light-gold);
+            border-color: var(--gold);
+        }
+
+        .page-btn.active {
+            background-color: var(--gold);
+            border-color: var(--dark-gold);
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background-color: var(--light-gray);
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-title {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .newsletter-desc {
+            margin-bottom: 30px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px 0 0 5px;
+            font-size: 16px;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .newsletter-btn {
+            padding: 12px 25px;
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--dark-gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--gold);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--medium-gray);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            nav ul li {
+                margin: 0 10px;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-container {
+                max-width: 100%;
+                margin-top: 15px;
+            }
+
+            .featured-content {
+                flex-direction: column;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-btn {
+                border-radius: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .filter-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .toggle-tabs {
+                flex-direction: column;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animation for counter */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .counter-animate {
+            animation: countUp 0.5s ease forwards;
+        }
+
+        /* Animation for resource cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .resources-grid .resource-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .resources-grid .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resources-grid .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resources-grid .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resources-grid .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        .resources-grid .resource-card:nth-child(5) { animation-delay: 0.5s; }
+        .resources-grid .resource-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/api/placeholder/50/50" alt="GhF Logo">
+                    <div class="logo-text">
+                        <span class="logo-name">Ghana Forward</span>
+                        <span class="logo-tagline">Building Our Nation Together</span>
+                    </div>
+                </div>
+
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="abour.html">About Us</a></li>
+                        <li><a href="policy.html">Policy Hub</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="petitions.html">Petitions</a></li>
+                        <li><a href="forum.html">Forum</a></li>
+                        <li><a href="#" class="current">Resources</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="support.html">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Resource Center</h1>
+            <p>Access knowledge tools, templates, and educational materials to empower your participation in Ghana's development.</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <button class="filter-btn active">All Resources</button>
+                    <button class="filter-btn">Civic Education</button>
+                    <button class="filter-btn">Policy Analysis</button>
+                    <button class="filter-btn">Development Templates</button>
+                    <button class="filter-btn">Advocacy Guides</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" placeholder="Search resources...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Access Tier Toggle -->
+            <div class="access-toggle">
+                <div class="toggle-tabs">
+                    <div class="toggle-tab active">Free Resources</div>
+                    <div class="toggle-tab">Donation-Based</div>
+                    <div class="toggle-tab">Premium</div>
+                </div>
+                <div class="toggle-content">
+                    <div class="toggle-description">
+                        <p>Our free resources are available to everyone. These include civic education materials, basic policy briefs, and citizen engagement guides.</p>
+                    </div>
+                    <div class="access-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> No registration required</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Unlimited downloads</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Basic education materials</span>
+                    </div>
+                    <div class="toggle-cta">
+                        <a href="#">Browse Free Resources</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Resource -->
+            <div class="featured-resource">
+                <div class="featured-badge">Featured</div>
+                <div class="featured-content">
+                    <div class="featured-image">
+                        <img src="/api/placeholder/500/300" alt="Featured Resource">
+                    </div>
+                    <div class="featured-details">
+                        <div>
+                            <h3 class="featured-title">Ghana's Path to Economic Resilience: A Comprehensive Analysis</h3>
+                            <p class="featured-desc">This comprehensive report analyzes Ghana's economic outlook, challenges, and opportunities for the next decade. It includes policy recommendations, comparative analysis with similar economies, and actionable steps for citizens and policymakers alike.</p>
+                            <div class="featured-meta">
+                                <span><i class="far fa-calendar"></i> Updated April 2025</span>
+                                <span><i class="fas fa-download"></i> <span class="counter-animate">2,457</span> Downloads</span>
+                            </div>
+                        </div>
+                        <div class="featured-download">
+                            <div class="resource-tags">
+                                <span class="tag">Economic Development</span>
+                                <span class="tag">Policy Analysis</span>
+                                <span class="tag">Research</span>
+                            </div>
+                            <button class="featured-btn"><i class="fas fa-download"></i> Download Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Grid -->
+            <section class="resources-section">
+                <h2 class="section-title">Latest Resources</h2>
+                <div class="resources-grid">
+                    <!-- Resource Card 1 -->
+                    <div class="resource-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">Civic Education</span>
+                                    <h3 class="resource-title">Understanding Ghana's Electoral System</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">Mar 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 865</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Understanding Ghana's Electoral System</h3>
+                                    <p class="resource-desc">A comprehensive guide to Ghana's electoral process, including voter registration, political parties, and the role of the Electoral Commission.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Civic Education</span>
+                                        <span class="tag">Elections</span>
+                                        <span class="tag">Democracy</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Card 2 -->
+                    <div class="resource-card">
+                        <div class="resource-badge">Popular</div>
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">Policy Analysis</span>
+                                    <h3 class="resource-title">Ghana's Education Reform: Impact Analysis</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">Apr 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 1,203</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Ghana's Education Reform: Impact Analysis</h3>
+                                    <p class="resource-desc">An in-depth review of recent education reforms in Ghana, examining outcomes, challenges, and recommendations for improvement.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Education</span>
+                                        <span class="tag">Policy</span>
+                                        <span class="tag">Analysis</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Card 3 -->
+                    <div class="resource-card premium-resource">
+                        <div class="resource-badge">Premium</div>
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">Development Templates</span>
+                                    <h3 class="resource-title">Community Development Project Blueprint</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">May 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 734</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Community Development Project Blueprint</h3>
+                                    <p class="resource-desc">Professional templates and frameworks for planning, implementing, and evaluating community development initiatives.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Development</span>
+                                        <span class="tag">Templates</span>
+                                        <span class="tag">Community</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-crown"></i> Premium</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Card 4 -->
+                    <div class="resource-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">Advocacy Guide</span>
+                                    <h3 class="resource-title">Effective Advocacy: A Citizen's Handbook</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">Feb 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 947</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Effective Advocacy: A Citizen's Handbook</h3>
+                                    <p class="resource-desc">Learn practical advocacy techniques to influence policy decisions at local and national levels in Ghana.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Advocacy</span>
+                                        <span class="tag">Civic Action</span>
+                                        <span class="tag">Guide</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Card 5 -->
+                    <div class="resource-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">African Cooperation</span>
+                                    <h3 class="resource-title">Ghana & AfCFTA: Opportunities Analysis</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">Apr 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 631</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Ghana & AfCFTA: Opportunities Analysis</h3>
+                                    <p class="resource-desc">Comprehensive analysis of opportunities for Ghana under the African Continental Free Trade Area agreement.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Economics</span>
+                                        <span class="tag">Trade</span>
+                                        <span class="tag">Africa</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-download"></i> Download</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Card 6 -->
+                    <div class="resource-card premium-resource">
+                        <div class="resource-badge">Premium</div>
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="resource-image">
+                                    <img src="/api/placeholder/300/180" alt="Resource Image">
+                                </div>
+                                <div class="resource-content">
+                                    <span class="resource-type">Global Best Practices</span>
+                                    <h3 class="resource-title">Innovation Hub: Digital Governance Models</h3>
+                                    <div class="resource-meta">
+                                        <span class="date">May 2025</span>
+                                        <span class="downloads"><i class="fas fa-download"></i> 489</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h3 class="resource-title">Innovation Hub: Digital Governance Models</h3>
+                                    <p class="resource-desc">Case studies of successful digital governance models from around the world with adaptation strategies for Ghana.</p>
+                                    <div class="resource-tags">
+                                        <span class="tag">Innovation</span>
+                                        <span class="tag">Digital</span>
+                                        <span class="tag">Governance</span>
+                                    </div>
+                                </div>
+                                <div class="resource-actions">
+                                    <button class="download-btn"><i class="fas fa-crown"></i> Premium</button>
+                                    <div class="action-icons">
+                                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                                        <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <div class="page-btn"><i class="fas fa-chevron-left"></i></div>
+                    <div class="page-btn active">1</div>
+                    <div class="page-btn">2</div>
+                    <div class="page-btn">3</div>
+                    <div class="page-btn">4</div>
+                    <div class="page-btn"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <h2 class="newsletter-title">Stay Updated with Our Resources</h2>
+                <p class="newsletter-desc">Subscribe to our newsletter to receive latest resources, policy updates, and opportunities directly in your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your email address">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Ghana Forward</h4>
+                    <p>Building a better Ghana through civic engagement, policy advocacy, and national development initiatives.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Policy Hub</a></li>
+                        <li><a href="#">News & Analysis</a></li>
+                        <li><a href="#">Petitions</a></li>
+                        <li><a href="#">Nation Builders Forum</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Civic Education</a></li>
+                        <li><a href="#">Policy Analysis</a></li>
+                        <li><a href="#">Development Templates</a></li>
+                        <li><a href="#">Advocacy Guides</a></li>
+                        <li><a href="#">African Cooperation</a></li>
+                        <li><a href="#">Global Best Practices</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Independence Ave, Accra</li>
+                        <li><i class="fas fa-phone"></i> +233 30 000 0000</li>
+                        <li><i class="fas fa-envelope"></i> info@ghanaforward.org</li>
+                        <li><i class="fab fa-whatsapp"></i> +233 50 000 0000</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ghana Forward. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle tabs functionality
+            const tabs = document.querySelectorAll('.toggle-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Example content updates based on selected tier
+                    const content = document.querySelector('.toggle-content');
+                    const description = document.querySelector('.toggle-description p');
+                    const cta = document.querySelector('.toggle-cta a');
+                    
+                    if (this.textContent === 'Free Resources') {
+                        description.textContent = 'Our free resources are available to everyone. These include civic education materials, basic policy briefs, and citizen engagement guides.';
+                        cta.textContent = 'Browse Free Resources';
+                        cta.classList.remove('premium-cta');
+                    } else if (this.textContent === 'Donation-Based') {
+                        description.textContent = 'Access more detailed research, analysis tools, and specialized guides by making a donation of any amount to support our work.';
+                        cta.textContent = 'Donate & Access';
+                        cta.classList.remove('premium-cta');
+                    } else if (this.textContent === 'Premium') {
+                        description.textContent = 'Our premium tier offers exclusive access to comprehensive research papers, professional templates, and consultation with our policy experts.';
+                        cta.textContent = 'Upgrade to Premium';
+                        cta.classList.add('premium-cta');
+                    }
+                });
+            });
+            
+            // Filter buttons
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Animate counters when in viewport
+            const counters = document.querySelectorAll('.counter-animate');
+            counters.forEach(counter => {
+                const target = +counter.textContent;
+                const increment = target / 30;
+                let count = 0;
+                
+                const updateCount = () => {
+                    count += increment;
+                    if (count < target) {
+                        counter.textContent = Math.ceil(count).toLocaleString();
+                        setTimeout(updateCount, 30);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                
+                updateCount();
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav ul');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Responsive adjustments
+            function handleResize() {
+                if (window.innerWidth > 576) {
+                    nav.style.display = 'flex';
+                } else {
+                    nav.style.display = 'none';
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            handleResize();
+        });
+    </script>
+</body>
+</html>
