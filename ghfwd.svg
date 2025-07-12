@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="400" cy="400" r="380" fill="#FFFFFF" stroke="#FFD700" stroke-width="10"/>
+  
+  <!-- Ghana Flag Colors Ribbon -->
+  <path d="M400,120 C550,120 680,180 760,280 L400,400 L40,280 C120,180 250,120 400,120 Z" fill="#CE126"/>
+  <path d="M400,120 L400,400 L760,280 C680,180 550,120 400,120 Z" fill="#006B3F"/>
+  
+  <!-- Golden Star -->
+  <path d="M400,190 L422,260 L495,260 L436,305 L458,375 L400,330 L342,375 L364,305 L305,260 L378,260 Z" fill="#FFD700" stroke="#000000" stroke-width="5"/>
+  
+  <!-- Adinkra Symbol (Sankofa) -->
+  <path d="M400,480 C430,480 455,505 455,535 C455,565 430,590 400,590 C370,590 345,565 345,535 C345,505 370,480 400,480 Z" fill="none" stroke="#FFD700" stroke-width="12"/>
+  <path d="M400,535 C400,535 440,480 500,480 C560,480 580,535 580,535 C580,535 560,590 500,590 C450,590 420,560 420,560" fill="none" stroke="#FFD700" stroke-width="12" stroke-linecap="round"/>
+  <path d="M400,535 C400,535 360,480 300,480 C240,480 220,535 220,535 C220,535 240,590 300,590 C350,590 380,560 380,560" fill="none" stroke="#FFD700" stroke-width="12" stroke-linecap="round"/>
+  
+  <!-- Forward Arrow -->
+  <path d="M300,640 L510,640 L510,610 L580,670 L510,730 L510,700 L300,700 Z" fill="#FFD700" stroke="#000000" stroke-width="5"/>
+  
+  <!-- Text -->
+  <text x="400" y="780" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" fill="#000000">GHANA FORWARD</text>
+  
+  <!-- Animated Pulse Effect (implemented in CSS/JS) -->
+  <circle cx="400" cy="400" r="390" fill="none" stroke="#FFD700" stroke-width="4" opacity="0.7">
+    <animate attributeName="r" values="390;410;390" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+</svg>
